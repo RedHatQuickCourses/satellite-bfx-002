@@ -1,12 +1,13 @@
-= An Example Break-fix course
+= Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
 :navtitle: Home
 
 == Introduction
 
-TITLE1: Red Hat Enterprise Linux 9 (FIXME product)
+- Red Hat Satellite 6
 
-TITLE2: Break-fix Practice 1 (FIXME title)
+*Break-fix:* Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
 
-Description:
-This break-fix training simulates a problem FIXME . You'll investigate and solve the problem in a hands-on lab environment to complete the training.
+*Description:*
+This break-fix training simulates problemes which are frequently encountered for a minor/major upgrade of Red Hat Satellite 6 . You'll investigate and solve the problem in a hands-on lab environment to complete the training.
 
+NOTE: After ordering the lab run the lab preparation instruction only *ONCE* .
