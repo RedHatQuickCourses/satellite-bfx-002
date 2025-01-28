@@ -131,7 +131,78 @@
 <article class="doc">
 <h1 class="page">Guided solution (page 1 of 2)</h1>
 <div class="paragraph">
-<p>FIXME: Provide step-by-step instructions here to resolve the issue.</p>
+<p><strong>ISSUE 1</strong> Unable to enable the required repos for upgrade since the satellite is registered to some other satellite/capsule server.<br>
+<strong>FIX</strong><br>
+Remove the existing katello-ca-consumer<br>
+<code># rpm -qa | grep katello-ca-consumer | xargs rpm -e</code><br>
+Unregister the satellite<br>
+<code># subscription-manager clean</code><br>
+Rename or move the rhsm.conf<br>
+<code># mv /etc/rhsm/rhsm.conf /var/tmp</code><br>
+Create a fresh rhsm.conf which points to the CDN<br>
+<code># cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf</code><br>
+Register it to the Red Hat Portal using your own credentials<br>
+<code># subscription-manager register</code><br>
+Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf</p>
+</div>
+<div class="paragraph">
+<p><strong>ISSUE 2</strong> satellite-maintain upgrade check fails at:<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Setup hammer:
+Configuring Hammer CLI...
+Hammer admin password:
+                                                                      [FAIL]
+Hammer configuration failed: Incorrect credential for admin user.
+--------------------------------------------------------------------------------
+
+# hammer ping shows
+Error: Failed to open TCP connection to satellite.xxxx.sandboxxxxx.opentlc.com:443 (No route to host - connect(2) for "satellite.xxxx.sandboxxxxx.opentlc.com" port 443)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>FIX</strong> The ip in /etc/hosts is incorrect. Check the ip from <code># ip a s</code> and correct it in /etc/hosts from the satellite.</p>
+</div>
+<div class="paragraph">
+<p><strong>ISSUE 3</strong>
+satellite-maintain upgrade check fails at:<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Check whether all services are running using the ping call:           [FAIL]
+Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: certificate verify failed (Hostname mismatch)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>FIX</strong> The fqdn [hostname -f] on satellite is incorrectly set as shortname. Check for the actual fqdn in the details for this lab or in /etc/hosts and update it via<br>
+<code># hostnamectl set-hostname &lt;actual satellite-fqdn&gt;</code></p>
+</div>
+<div class="paragraph">
+<p><strong>ISSUE 4</strong>
+satellite-maintain upgrade check fails at:<br>
+Check if system requirements match current tuning profile:            [FAIL]</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ERROR: The installer is configured to use the large tuning profile and does not meet the requirements.
+The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>FIX</strong> Edit /etc/foreman-installer/scenarios.d/satellite.yaml and set tuning profile as medium or default</p>
+</div>
+<div class="paragraph">
+<p><strong>ISSUE 5</strong>
+satellite-maintain upgrade run fails at:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[ERROR ] [configure] Could not prefetch yumrepo provider 'inifile': Section "rhel-8-for-x86_64-baseos-rpms" is already defined, cannot redefine (file: /etc/yum.repos.d/redhat.repo) +</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>FIX</strong> Remove the /etc/yum.repos.d/rh-cloud.repo file.</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">Guided solution</a></span>
