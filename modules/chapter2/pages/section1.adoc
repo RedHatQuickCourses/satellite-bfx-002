@@ -1,5 +1,6 @@
 = Guided solution (page 1 of 2)
 
+Try to enable the maintenance repo using `# subscription-manager repos --enable satellite-maintenance-6.15-for-rhel-8-x86_64-rpms` but if fails: +
 *ISSUE 1* Unable to enable the required repos for upgrade since the satellite is registered to some other satellite/capsule server. +
 *FIX* +
 Remove the existing katello-ca-consumer +
@@ -14,7 +15,17 @@ Register it to the Red Hat Portal using your own credentials +
 `# subscription-manager register` +
 Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf
 
-*ISSUE 2* satellite-maintain upgrade check fails at: +
+Now enable the required repos and the required module using:
+----
+# subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
+--enable=rhel-8-for-x86_64-appstream-rpms \
+--enable=satellite-6.15-for-rhel-8-x86_64-rpms \
+--enable=satellite-maintenance-6.15-for-rhel-8-x86_64-rpms
+
+# dnf module enable satellite:el8
+----
+
+*ISSUE 2* Now run `# satellite-maintain upgrade check --target-version 6.15` BUT it fails at: +
 ----
 Setup hammer: 
 Configuring Hammer CLI...
@@ -30,7 +41,7 @@ Error: Failed to open TCP connection to satellite.xxxx.sandboxxxxx.opentlc.com:4
 *FIX* The ip in /etc/hosts is incorrect. Check the ip from `# ip a s` and correct it in /etc/hosts from the satellite.
 
 *ISSUE 3* 
-satellite-maintain upgrade check fails at: +
+`# satellite-maintain upgrade check --target-version 6.15` fails at: +
 ----
 Check whether all services are running using the ping call:           [FAIL]
 Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: certificate verify failed (Hostname mismatch)
@@ -40,7 +51,7 @@ Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: cert
 `# hostnamectl set-hostname <actual satellite-fqdn>`
 
 *ISSUE 4* 
-satellite-maintain upgrade check fails at: +
+`# satellite-maintain upgrade check --target-version 6.15`fails at: +
 Check if system requirements match current tuning profile:            [FAIL] 
 ----
 ERROR: The installer is configured to use the large tuning profile and does not meet the requirements. 
@@ -49,8 +60,9 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 
 *FIX* Edit /etc/foreman-installer/scenarios.d/satellite.yaml and set tuning profile as medium or default
 
+Now run the actual upgrade using `# satellite-maintain upgrade run --target-version 6.15`
 *ISSUE 5* 
-satellite-maintain upgrade run fails at:
+`# satellite-maintain upgrade run --target-version 6.15` fails at:
 ----
 [ERROR ] [configure] Could not prefetch yumrepo provider 'inifile': Section "rhel-8-for-x86_64-baseos-rpms" is already defined, cannot redefine (file: /etc/yum.repos.d/redhat.repo) +
 ----
