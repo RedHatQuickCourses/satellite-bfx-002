@@ -131,7 +131,8 @@
 <article class="doc">
 <h1 class="page">Guided solution (page 1 of 2)</h1>
 <div class="paragraph">
-<p><strong>ISSUE 1</strong> Unable to enable the required repos for upgrade since the satellite is registered to some other satellite/capsule server.<br>
+<p>Try to enable the maintenance repo using <code># subscription-manager repos --enable satellite-maintenance-6.15-for-rhel-8-x86_64-rpms</code> but if fails:<br>
+<strong>ISSUE 1</strong> Unable to enable the required repos for upgrade since the satellite is registered to some other satellite/capsule server.<br>
 <strong>FIX</strong><br>
 Remove the existing katello-ca-consumer<br>
 <code># rpm -qa | grep katello-ca-consumer | xargs rpm -e</code><br>
@@ -146,7 +147,20 @@ Register it to the Red Hat Portal using your own credentials<br>
 Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf</p>
 </div>
 <div class="paragraph">
-<p><strong>ISSUE 2</strong> satellite-maintain upgrade check fails at:<br></p>
+<p>Now enable the required repos and the required module using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre># subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
+--enable=rhel-8-for-x86_64-appstream-rpms \
+--enable=satellite-6.15-for-rhel-8-x86_64-rpms \
+--enable=satellite-maintenance-6.15-for-rhel-8-x86_64-rpms
+
+# dnf module enable satellite:el8</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>ISSUE 2</strong> Now run <code># satellite-maintain upgrade check --target-version 6.15</code> BUT it fails at:<br></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -166,7 +180,7 @@ Error: Failed to open TCP connection to satellite.xxxx.sandboxxxxx.opentlc.com:4
 </div>
 <div class="paragraph">
 <p><strong>ISSUE 3</strong>
-satellite-maintain upgrade check fails at:<br></p>
+<code># satellite-maintain upgrade check --target-version 6.15</code> fails at:<br></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -180,7 +194,7 @@ Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: cert
 </div>
 <div class="paragraph">
 <p><strong>ISSUE 4</strong>
-satellite-maintain upgrade check fails at:<br>
+`# satellite-maintain upgrade check --target-version 6.15`fails at:<br>
 Check if system requirements match current tuning profile:            [FAIL]</p>
 </div>
 <div class="listingblock">
@@ -193,8 +207,9 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 <p><strong>FIX</strong> Edit /etc/foreman-installer/scenarios.d/satellite.yaml and set tuning profile as medium or default</p>
 </div>
 <div class="paragraph">
-<p><strong>ISSUE 5</strong>
-satellite-maintain upgrade run fails at:</p>
+<p>Now run the actual upgrade using <code># satellite-maintain upgrade run --target-version 6.15</code>
+<strong>ISSUE 5</strong>
+<code># satellite-maintain upgrade run --target-version 6.15</code> fails at:</p>
 </div>
 <div class="listingblock">
 <div class="content">
