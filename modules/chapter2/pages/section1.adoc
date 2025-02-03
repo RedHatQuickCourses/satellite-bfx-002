@@ -13,7 +13,8 @@ Create a fresh rhsm.conf which points to the CDN +
 `# cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf` +
 Register it to the Red Hat Portal using your own credentials +
 `# subscription-manager register` +
-Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf
+Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf +
+`# subscription-manager refresh`
 
 Now enable the required repos and the required module using:
 ----
