@@ -1,5 +1,5 @@
 name: satellite-bfx-002
-title: Red Hat Satellite Break-fix Practice 2 (FIXME)
+title: Break-fix Practice Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
 version: 1
 nav:
 - modules/ROOT/nav.adoc
