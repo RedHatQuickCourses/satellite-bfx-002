@@ -1,5 +1,5 @@
 site:
-  title: Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
+  title: Break-fix Practice Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
   start_page: satellite-bfx-002::index.adoc
 
 content:
