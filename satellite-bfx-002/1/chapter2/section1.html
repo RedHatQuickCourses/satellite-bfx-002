@@ -272,7 +272,7 @@ Repository 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' is enabled for th
 </div>
 </li>
 <li>
-<p>Run <code>satellite-maintain upgrade check</code> command but if fails.</p>
+<p>Run <code>satellite-maintain upgrade check</code> command but if fails [when asked for hammer password provide the password for satellite web ui which is also the hammer password from lab details page].</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
@@ -368,7 +368,13 @@ Hammer configuration failed: Incorrect credential for admin user.
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Answer 'y' to questions asked.
+Answer 'n' to question:<br>
+ <code>Continue with step [Restart applicable services]?, [y(yes), n(no)]</code><br>
+ because service restart wont fix the issue.<br>
+ BUT<br>
+ Answer 'y' to question:<br>
+ <code>Continue with step [Delete old tasks]?, [y(yes), n(no)]</code><br>
+ This will cleanup old tasks.
 </td>
 </tr>
 </table>
@@ -404,18 +410,6 @@ satellite
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Answer 'y' to questions asked.
-</td>
-</tr>
-</table>
 </div>
 <div class="listingblock">
 <div class="title">Sample output:</div>
