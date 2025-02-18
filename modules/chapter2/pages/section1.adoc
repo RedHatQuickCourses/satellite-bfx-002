@@ -106,7 +106,7 @@ Repository 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' is enabled for th
 dnf module enable satellite:el8
 ----
 
-. Run `satellite-maintain upgrade check` command but if fails.
+. Run `satellite-maintain upgrade check` command but if fails [when asked for hammer password provide the password for satellite web ui which is also the hammer password from lab details page].
 +
 [source,bash,role=execute]
 ----
@@ -184,7 +184,13 @@ satellite-maintain upgrade check --target-version 6.15.z
 ----
 +
 [NOTE]
-Answer 'y' to questions asked.
+Answer 'n' to question: +
+ `Continue with step [Restart applicable services]?, [y(yes), n(no)]` +
+ because service restart wont fix the issue. +
+ BUT +
+ Answer 'y' to question: +
+ `Continue with step [Delete old tasks]?, [y(yes), n(no)]` +
+ This will cleanup old tasks.
 
 +
 .Sample output:
@@ -214,9 +220,7 @@ satellite
 ----
 satellite-maintain upgrade check --target-version 6.15.z
 ----
-+
-[NOTE]
-Answer 'y' to questions asked.
+
 
 +
 .Sample output:
