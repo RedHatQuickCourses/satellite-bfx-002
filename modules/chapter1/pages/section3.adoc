@@ -12,11 +12,14 @@ lab grade grade1
 .Sample output
 ----
 [root@classroom ~]# lab grade grade1
-Initiating break-fix-script with option grade
-Grading.  Please wait.
-Success.
-COMPLETION CODE: <check your output for this value>
-Completed break-fix-script with option grade successfully
+...
+...
+TASK [Checking result] *********************************************************************************************************************************************************************************************************************
+ok: [satellite] => {
+    "msg": "Success. your alphanumeric code for completion is XXXXXX"
+}
+...
+...
 ----
 
 == Submit the completion code
