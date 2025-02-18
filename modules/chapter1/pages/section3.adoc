@@ -1,0 +1,32 @@
+= Check your work
+
+== Check your work using the grading script
+
+After you have resolved the issue and met the success criteria, login to `bastion` system as `lab-user` user and run the grading script as shown here to check your work:
+
+[source,bash,role=execute]
+----
+lab grade grade1
+----
+
+.Sample output
+----
+[root@classroom ~]# lab grade grade1
+...
+...
+TASK [Checking result] *********************************************************************************************************************************************************************************************************************
+ok: [satellite] => {
+    "msg": "Success. your alphanumeric code for completion is XXXXXX"
+}
+...
+...
+----
+
+== Submit the completion code
+
+NOTE: Skip this if not applicable for you.
+
+- For RedHat internal audience: Submit that completion code https://link-to-appropriate-lms.com[here,window=_blank] to receive a grade for this training
+- For RedHat partners: Submit that completion code https://link-to-appropriate-lms.com[here,window=_blank] to receive a grade for this training
+
+FIXME: Change the links in the above lines to the link for appropriate audience specific LMS where learner can provide completion code. Remove this block if submitting completion is not applicable.

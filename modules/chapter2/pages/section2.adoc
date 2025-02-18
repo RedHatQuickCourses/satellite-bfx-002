@@ -1,3 +1,51 @@
-= Guided solution (page 2 of 2)
+= Guided Solution (2 of 2)
+:experimental:
 
-Following the previously mentioned fixes, now the upgrade should be marked complete once the satellite version should be updated to the latest of 6.15 and the satellite-installer should complete successfully via satellite-maintain.
+. Now run the actual upgrade using the `satellite-maintain upgrade run` command and provide `yes` to any questions asked for continuing the upgrade.
++
+[source,bash,role=execute]
+----
+satellite-maintain upgrade run --target-version 6.15.z
+----
++
+.Sample output:
+----
+...
+...
+[ERROR ] [configure] Could not prefetch yumrepo provider 'inifile': Section "rhel-8-for-x86_64-baseos-rpms" is already defined, cannot redefine (file: /etc/yum.repos.d/redhat.repo) +
+...
+...
+----
+
+. This is because `/etc/yum.repos.d/rh-cloud.repo.rep`o file having duplicate or incorrect entries.
+Remove the `/etc/yum.repos.d/rh-cloud.repo` file.
++
+[source,bash,role=execute]
+----
+rm -rf /etc/yum.repos.d/rh-cloud.repo
+----
+
+. Run the `satellite-maintain upgrade run` command again and it should complete without any errors.
++
+[source,bash,role=execute]
+----
+satellite-maintain upgrade run --target-version 6.15.z
+----
++
+.Sample output:
+----
+...
+...
+2025-02-11 07:59:28 [NOTICE] [configure] System configuration has finished.
+  Success!
+  * Satellite is running at https://satellite.xxx.yyy
+...
+...
+Reboot is required to fully utilize these updates.
+More information: https://access.redhat.com/solutions/27943
+...
+...
+Upgrade finished.
+----
+
+. Following the previously mentioned fixes, now the upgrade should be marked complete once the satellite version should be updated to the latest of 6.15 and the `satellite-installer` should complete successfully via `satellite-maintain`.

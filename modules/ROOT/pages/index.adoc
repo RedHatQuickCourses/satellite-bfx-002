@@ -3,11 +3,13 @@
 
 == Introduction
 
+=== Red Hat Products
 - Red Hat Satellite 6
 
-*Break-fix:* Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
+=== Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z
 
 *Description:*
-This break-fix training simulates problemes which are frequently encountered for a minor/major upgrade of Red Hat Satellite 6 . You'll investigate and solve the problem in a hands-on lab environment to complete the training.
+This break-fix training simulates problems which are frequently encountered for a minor/major upgrade of Red Hat Satellite 6.
+You'll investigate and solve the problem in a hands-on lab environment to complete the training.
 
 NOTE: After ordering the lab run the lab preparation instruction only *ONCE* .

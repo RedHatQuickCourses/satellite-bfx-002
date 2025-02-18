@@ -4,14 +4,14 @@
 
 **Type of issue:**
 
-The provided Satellite 6.15.4 server needs a minor upgrade to 6.15.z. But its failing due to some incorrect configurations. Fix the encountered errors and ensure a successful upgrade to 6.15.z.
-
+The provided Satellite `6.15.4` server needs a minor upgrade to `6.15.z`.
+But its failing due to some incorrect configuration.
+Fix the encountered errors and ensure a successful upgrade to `6.15.z`.
 
 **What you should already know:**
 
-- This training assumes that you are a Red Hat Certified System Administrator (RHCSA) or have equivalent experience administrating Red Hat Enterprise Linux 7 or 8. +
-- Administering Red Hat Satellite 6 .
-
+- A Red Hat Certified System Administrator (RHCSA) or have equivalent experience administrating Red Hat Enterprise Linux 7 or 8.
+- Administering Red Hat Satellite 6.
 
 **How break-fix training works:**
 
