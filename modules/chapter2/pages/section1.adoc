@@ -1,9 +1,9 @@
-= Guided solution (page 1 of 2)
+= Guided Solution (1 of 2)
 :experimental:
 
 == Objectives
 
-* Investigate why the minor upgrade to 6.15.z is failing in Red Hat Satellite 6.
+* Investigate why the satellite `6.15.4` server upgrade to `6.15.z` is failing in Red Hat Satellite 6.
 * Solve the upgrade issue in the hands-on lab environment.
 
 == Instructions
@@ -16,53 +16,73 @@ Run following instructions on `satellite` system with `root` as user.
 [root@satellite ~]#
 ----
 
-* ISSUE 1: Try to enable the maintenance repo using:
+. Try to enable the maintenance repo using but if fails.
 +
 [source,bash,role=execute]
 ----
 subscription-manager repos --enable satellite-maintenance-6.15-for-rhel-8-x86_64-rpms
 ----
-but if fails:
 +
 .Sample output:
 ----
 Error: 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' does not match a valid repository ID. Use "subscription-manager repos --list" to see valid repositories.
 ----
-+
-This is because the satellite is registered to some other satellite/capsule server. Follow the below steps to fix it
- 
 
-Remove the existing katello-ca-consumer
+. This is because the satellite is registered to some other satellite/capsule server.
+To fix it:
+
+.. Remove the existing `katello-ca-consumer`.
++
 [source,bash,role=execute]
 ----
 rpm -qa | grep katello-ca-consumer | xargs rpm -e
 ----
-Unregister the satellite
+
+.. Unregister the satellite.
++
 [source,bash,role=execute]
 ----
 subscription-manager clean
----- 
-Rename or move the rhsm.conf 
+----
+
+.. Rename or move the `rhsm.conf`.
++
 [source,bash,role=execute]
 ----
 mv /etc/rhsm/rhsm.conf /var/tmp
 ----
-Create a fresh rhsm.conf which points to the CDN
+
+.. Create a fresh `rhsm.conf` which points to the CDN.
++
 [source,bash,role=execute]
 ----
-cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf`
+cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf
 ----
-Register it to the Red Hat Portal using your own credentials
+
+. Register it to the Red Hat Portal using your own credentials.
++
 [source,bash,role=execute]
 ----
 subscription-manager register
 ----
-Also make sure manage_repos has 1 instead of 0 in /etc/rhsm/rhsm.conf and then
+
+. Also make sure `manage_repos` is set to `1` instead of `0` in `/etc/rhsm/rhsm.conf`.
++
+.Sample output:
+----
+[root@satellite ~]# cat /etc/rhsm/rhsm.conf | grep -i manage_repos
+manage_repos = 1
+----
+
+. Run `subscription-manager refresh` to refresh the subscription.
++
 [source,bash,role=execute]
 ----
 subscription-manager refresh
 ----
-Now enable the required repos and the required module using:
+
+. Now enable the required repos and the required module using.
++
 [source,bash,role=execute]
 ----
 subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
@@ -70,123 +90,162 @@ subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
 --enable=satellite-6.15-for-rhel-8-x86_64-rpms \
 --enable=satellite-maintenance-6.15-for-rhel-8-x86_64-rpms
 ----
-Enable the required module
++
+.Sample output:
+----
+Repository 'rhel-8-for-x86_64-baseos-rpms' is enabled for this system.
+Repository 'rhel-8-for-x86_64-appstream-rpms' is enabled for this system.
+Repository 'satellite-6.15-for-rhel-8-x86_64-rpms' is enabled for this system.
+Repository 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' is enabled for this system.
+----
+
+. Enable the required module.
++
 [source,bash,role=execute]
 ----
 dnf module enable satellite:el8
 ----
 
-* ISSUE 2: Run
+. Run `satellite-maintain upgrade check` command but if fails.
 +
 [source,bash,role=execute]
 ----
-satellite-maintain upgrade check --target-version 6.15
+satellite-maintain upgrade check --target-version 6.15.z
 ----
-but if fails with:
 +
 .Sample output:
-
 ----
-Setup hammer: 
+...
+...
+Setup hammer:
 Configuring Hammer CLI...
-Hammer admin password: 
+Hammer admin password:
                                                                       [FAIL]
 Hammer configuration failed: Incorrect credential for admin user.
 --------------------------------------------------------------------------------
+...
+...
 ----
 
-To debug further run:
+. To debug further run `hammer ping` command.
++
 [source,bash,role=execute]
 ----
 hammer ping
 ----
-It shows
-
++
 .Sample output:
 ----
 Error: Failed to open TCP connection to satellite.xxxx.sandboxxxxx.opentlc.com:443 (No route to host - connect(2) for "satellite.xxxx.sandboxxxxx.opentlc.com" port 443)
 ----
 
-This is because the ip in /etc/hosts is incorrect. Check the ip using the below command and correct it in `/etc/hosts` in the satellite for the satellite hostname entry.
+. This is because the ip in `/etc/hosts` is incorrect.
+
+.. Review the ip using the `ip a s` command.
++
 [source,bash,role=execute]
 ----
 ip a s
 ----
-
-* ISSUE 3: Now run:
-
-[source,bash,role=execute]
-----
-satellite-maintain upgrade check --target-version 6.15
-----
-but if fails with:
-
++
 .Sample output:
 ----
-Check whether all services are running using the ping call:           [FAIL]
-Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: certificate verify failed (Hostname mismatch)
+...
+...
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9001 qdisc mq state UP group default qlen 1000
+    link/ether 0a:3a:0e:3d:1d:85 brd ff:ff:ff:ff:ff:ff
+    altname enp39s0
+    altname ens64
+    inet 192.168.0.xxx/24 brd 192.168.0.255 scope global dynamic noprefixroute eth0
+       valid_lft 2341sec preferred_lft 2341sec
+    inet6 fe80::83a:eff:fe3d:1d85/64 scope link
+       valid_lft forever preferred_lft forever
+...
+...
 ----
 
-This is because the fqdn [hostname -f] on satellite is incorrectly set as shortname. Check for the actual fqdn in the details for this lab or in `/etc/hosts` on the line where we corrected ip in the previois step and update it via
+.. Compare the previous output and correct it in `/etc/hosts` in the satellite for the satellite hostname entry.
++
+.Sample output:
 ----
-hostnamectl set-hostname <actual satellite-fqdn>`
+[root@satellite ~]# cat /etc/hosts
+# BEGIN ANSIBLE MANAGED BLOCK
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.0.yyy satellite.xxxx.sandboxxxxx.opentlc.com
+# END ANSIBLE MANAGED BLOCK
 ----
 
-* ISSUE 4: Now again run:
+. Run `satellite-maintain upgrade check` command again but it will fail.
 +
 [source,bash,role=execute]
 ----
-satellite-maintain upgrade check --target-version 6.15
+satellite-maintain upgrade check --target-version 6.15.z
 ----
-but it fails with:
++
+[NOTE]
+Answer 'y' to questions asked.
 
++
 .Sample output:
 ----
-Check if system requirements match current tuning profile:            [FAIL] 
-
-ERROR: The installer is configured to use the large tuning profile and does not meet the requirements. 
-The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16. 
+...
+...
+Check whether all services are running using the ping call:           [FAIL]
+Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: certificate verify failed (Hostname mismatch)
+...
+...
 ----
 
-This is because incorrect tuning profile set so edit `/etc/foreman-installer/scenarios.d/satellite.yaml` and set `tuning profile` as `medium` or `default` in place of large
-
-Now again run:
-
-[source,bash,role=execute]
-----
-satellite-maintain upgrade check --target-version 6.15
-----
-This should complete successfully now.
-
-* ISSUE 5: Now run the actual upgrade using the below command and provide `yes` to any questions asked for continuing the upgrade.
-
-[source,bash,role=execute]
-----
-satellite-maintain upgrade run --target-version 6.15
-----
-but it fails with:
-
+. This is because the fqdn `hostname -f` on satellite is incorrectly set as shortname.
+Verify the actual fqdn in the details for this lab or in `/etc/hosts` on the line where you corrected the ip in the previous step and update it via `hostnamectl set-hostname <actual satellite-fqdn>` command.
++
 .Sample output:
 ----
-[ERROR ] [configure] Could not prefetch yumrepo provider 'inifile': Section "rhel-8-for-x86_64-baseos-rpms" is already defined, cannot redefine (file: /etc/yum.repos.d/redhat.repo) +
+[root@satellite ~]# hostname -f
+satellite
+
+[root@satellite ~]# hostnamectl set-hostname <actual satellite-fqdn>
 ----
 
-This is because /etc/yum.repos.d/rh-cloud.repo.repo file having duplicate or incorrect entries. Remove the /etc/yum.repos.d/rh-cloud.repo file.
-
+. Run `satellite-maintain upgrade check` command again but it will fail.
++
 [source,bash,role=execute]
 ----
-rm -rf /etc/yum.repos.d/rh-cloud.repo
+satellite-maintain upgrade check --target-version 6.15.z
 ----
++
+[NOTE]
+Answer 'y' to questions asked.
 
-Now run the upgrade and it should complete successully
-[source,bash,role=execute]
-----
-satellite-maintain upgrade run --target-version 6.15
-----
-
++
 .Sample output:
 ----
-2025-02-11 07:59:28 [NOTICE] [configure] System configuration has finished.
-  Success!
-  * Satellite is running at https://satellite.xxx.yyy
+...
+...
+Check if system requirements match current tuning profile:            [FAIL]
+
+ERROR: The installer is configured to use the large tuning profile and does not meet the requirements.
+The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16.
+...
+...
 ----
+
+. This is because incorrect `tuning` profile set in `/etc/foreman-installer/scenarios.d/satellite.yaml`.
+
+.. Set the `tuning` profile as `medium` or `default` instead of `large`.
++
+.Sample output:
+----
+[root@satellite ~]# cat /etc/foreman-installer/scenarios.d/satellite.yaml | grep -i tuning
+  tuning: medium
+----
+
+.. Run `satellite-maintain upgrade check` command again.
++
+[source,bash,role=execute]
+----
+satellite-maintain upgrade check --target-version 6.15.z
+----
++
+This should complete without any errors.
