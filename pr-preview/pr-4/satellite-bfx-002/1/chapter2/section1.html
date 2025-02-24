@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Guided Solution (1 of 2) :: Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</title>
+    <link rel="prev" href="index.html">
+    <link rel="next" href="section2.html">
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/satellite-bfx-002/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="satellite-bfx-002" data-version="1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chapter1/index.html">What’s in this break-fix?</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section1.html">Break-fix activity</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section2.html">Break-fix Scenario</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chapter1/section3.html">Check your work</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Guided Solution</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section1.html">Guided Solution (1 of 2)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Guided Solution (2 of 2)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</span>
+    <span class="version">1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Break-fix Practice: Minor upgrade of Red Hat Satellite 6.15 to 6.15.z</a></li>
+    <li><a href="index.html">Guided Solution</a></li>
+    <li><a href="section1.html">Guided Solution (1 of 2)</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Guided Solution (1 of 2)</h1>
+<div class="sect1">
+<h2 id="_objectives"><a class="anchor" href="#_objectives"></a>Objectives</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Investigate why the satellite <code>6.15.4</code> server upgrade to <code>6.15.z</code> is failing in Red Hat Satellite 6.</p>
+</li>
+<li>
+<p>Solve the upgrade issue in the hands-on lab environment.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_instructions"><a class="anchor" href="#_instructions"></a>Instructions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run the following instructions on the <code>satellite</code> system with <code>root</code> as the user.</p>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[ec2-user@satellite ~]$ sudo su -
+[root@satellite ~]#</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Try to enable the maintenance repo but if fails.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager repos --enable satellite-maintenance-6.15-for-rhel-8-x86_64-rpms</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>Error: 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' does not match a valid repository ID. Use "subscription-manager repos --list" to see valid repositories.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>This is because the satellite is registered to some other satellite/capsule server.
+To fix it:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Remove the existing <code>katello-ca-consumer</code>.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">rpm -qa | grep katello-ca-consumer | xargs rpm -e</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Unregister the satellite.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager clean</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Rename or move the <code>rhsm.conf</code>.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mv /etc/rhsm/rhsm.conf /var/tmp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a fresh <code>rhsm.conf</code> which points to the CDN.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Register it to the Red Hat Portal using your own credentials.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager register</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Also, make sure <code>manage_repos</code> is set to <code>1</code> instead of <code>0</code> in <code>/etc/rhsm/rhsm.conf</code>.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[root@satellite ~]# cat /etc/rhsm/rhsm.conf | grep -i manage_repos
+manage_repos = 1</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run <code>subscription-manager refresh</code> to refresh the subscription.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager refresh</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now enable the required repos and the required module using.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
+--enable=rhel-8-for-x86_64-appstream-rpms \
+--enable=satellite-6.15-for-rhel-8-x86_64-rpms \
+--enable=satellite-maintenance-6.15-for-rhel-8-x86_64-rpms</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>Repository 'rhel-8-for-x86_64-baseos-rpms' is enabled for this system.
+Repository 'rhel-8-for-x86_64-appstream-rpms' is enabled for this system.
+Repository 'satellite-6.15-for-rhel-8-x86_64-rpms' is enabled for this system.
+Repository 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' is enabled for this system.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Enable the required module.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">dnf module enable satellite:el8</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run <code>satellite-maintain upgrade check</code> command but if fails [when asked for hammer password provide the password for satellite web ui which is also the hammer password from lab details page].</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>...
+...
+Setup hammer:
+Configuring Hammer CLI...
+Hammer admin password:
+                                                                      [FAIL]
+Hammer configuration failed: Incorrect credential for admin user.
+--------------------------------------------------------------------------------
+...
+...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To debug further run the <code>hammer ping</code> command.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">hammer ping</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>Error: Failed to open TCP connection to satellite.xxxx.sandboxxxxx.opentlc.com:443 (No route to host - connect(2) for "satellite.xxxx.sandboxxxxx.opentlc.com" port 443)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>This is because the ip in <code>/etc/hosts</code> is incorrect.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Review the ip using the <code>ip a s</code> command.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ip a s</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>...
+...
+2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 9001 qdisc mq state UP group default qlen 1000
+    link/ether 0a:3a:0e:3d:1d:85 brd ff:ff:ff:ff:ff:ff
+    altname enp39s0
+    altname ens64
+    inet 192.168.0.xxx/24 brd 192.168.0.255 scope global dynamic noprefixroute eth0
+       valid_lft 2341sec preferred_lft 2341sec
+    inet6 fe80::83a:eff:fe3d:1d85/64 scope link
+       valid_lft forever preferred_lft forever
+...
+...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Compare the previous output and correct it in <code>/etc/hosts</code> in the satellite for the satellite hostname entry.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[root@satellite ~]# cat /etc/hosts
+# BEGIN ANSIBLE MANAGED BLOCK
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.0.yyy satellite.xxxx.sandboxxxxx.opentlc.com
+# END ANSIBLE MANAGED BLOCK</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Run <code>satellite-maintain upgrade check</code> command again but it will fail.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Answer 'n' to question:<br>
+ <code>Continue with step [Restart applicable services]?, [y(yes), n(no)]</code><br>
+ Because service restart won&#8217;t fix the issue.<br>
+ BUT<br>
+ Answer 'y' to question:<br>
+ <code>Continue with step [Delete old tasks]?, [y(yes), n(no)]</code><br>
+ This will clean up old tasks.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>...
+...
+Check whether all services are running using the ping call:           [FAIL]
+Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: certificate verify failed (Hostname mismatch)
+...
+...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>This is because the fqdn <code>hostname -f</code> on satellite is incorrectly set as shortname.
+Verify the actual fqdn in the details for this lab or in <code>/etc/hosts</code> on the line where you corrected the IP in the previous step and update it via <code>hostnamectl set-hostname &lt;actual satellite-fqdn&gt;</code> command.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[root@satellite ~]# hostname -f
+satellite
+
+[root@satellite ~]# hostnamectl set-hostname &lt;actual satellite-fqdn&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run <code>satellite-maintain upgrade check</code> command again but it will fail.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>...
+...
+Check if system requirements match the current tuning profile:            [FAIL]
+
+ERROR: The installer is configured to use the large tuning profile and does not meet the requirements.
+The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16.
+...
+...</pre>
+</div>
+</div>
+</li>
+<li>
+<p>This is because an incorrect <code>tuning</code> profile set in <code>/etc/foreman-installer/scenarios.d/satellite.yaml</code>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set the <code>tuning</code> profile as <code>medium</code> or <code>default</code> instead of <code>large</code>.</p>
+<div class="listingblock">
+<div class="title">Sample output:</div>
+<div class="content">
+<pre>[root@satellite ~]# cat /etc/foreman-installer/scenarios.d/satellite.yaml | grep -i tuning
+  tuning: medium</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run <code>satellite-maintain upgrade check</code> command again.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">satellite-maintain upgrade check --target-version 6.15.z</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This should be complete without any errors.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Guided Solution</a></span>
+  <span class="next"><a href="section2.html">Guided Solution (2 of 2)</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
