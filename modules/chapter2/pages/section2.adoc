@@ -48,4 +48,4 @@ More information: https://access.redhat.com/solutions/27943
 Upgrade finished.
 ----
 
-. Following the previously mentioned fixes, now the upgrade should be marked complete once the satellite version should be updated to the latest of 6.15 and the `satellite-installer` should complete successfully via `satellite-maintain`.
+. Following the previously mentioned fixes, now the upgrade should be marked complete once the satellite version is updated to the latest of 6.15 and the `satellite-installer` should complete successfully via `satellite-maintain`.

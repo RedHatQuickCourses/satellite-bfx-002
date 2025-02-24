@@ -5,7 +5,7 @@
 **Type of issue:**
 
 The provided Satellite `6.15.4` server needs a minor upgrade to `6.15.z`.
-But its failing due to some incorrect configuration.
+But it's failing due to some incorrect configuration.
 Fix the encountered errors and ensure a successful upgrade to `6.15.z`.
 
 **What you should already know:**

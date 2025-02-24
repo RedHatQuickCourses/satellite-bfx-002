@@ -8,7 +8,7 @@
 
 == Instructions
 
-Run following instructions on `satellite` system with `root` as user.
+Run the following instructions on the `satellite` system with `root` as the user.
 
 .Sample output:
 ----
@@ -16,7 +16,7 @@ Run following instructions on `satellite` system with `root` as user.
 [root@satellite ~]#
 ----
 
-. Try to enable the maintenance repo using but if fails.
+. Try to enable the maintenance repo but if fails.
 +
 [source,bash,role=execute]
 ----
@@ -66,7 +66,7 @@ cp /etc/rhsm/rhsm.conf.kat-backup /etc/rhsm/rhsm.conf
 subscription-manager register
 ----
 
-. Also make sure `manage_repos` is set to `1` instead of `0` in `/etc/rhsm/rhsm.conf`.
+. Also, make sure `manage_repos` is set to `1` instead of `0` in `/etc/rhsm/rhsm.conf`.
 +
 .Sample output:
 ----
@@ -127,7 +127,7 @@ Hammer configuration failed: Incorrect credential for admin user.
 ...
 ----
 
-. To debug further run `hammer ping` command.
+. To debug further run the `hammer ping` command.
 +
 [source,bash,role=execute]
 ----
@@ -186,11 +186,11 @@ satellite-maintain upgrade check --target-version 6.15.z
 [NOTE]
 Answer 'n' to question: +
  `Continue with step [Restart applicable services]?, [y(yes), n(no)]` +
- because service restart wont fix the issue. +
+ Because service restart won't fix the issue. +
  BUT +
  Answer 'y' to question: +
  `Continue with step [Delete old tasks]?, [y(yes), n(no)]` +
- This will cleanup old tasks.
+ This will clean up old tasks.
 
 +
 .Sample output:
@@ -204,7 +204,7 @@ Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: cert
 ----
 
 . This is because the fqdn `hostname -f` on satellite is incorrectly set as shortname.
-Verify the actual fqdn in the details for this lab or in `/etc/hosts` on the line where you corrected the ip in the previous step and update it via `hostnamectl set-hostname <actual satellite-fqdn>` command.
+Verify the actual fqdn in the details for this lab or in `/etc/hosts` on the line where you corrected the IP in the previous step and update it via `hostnamectl set-hostname <actual satellite-fqdn>` command.
 +
 .Sample output:
 ----
@@ -227,7 +227,7 @@ satellite-maintain upgrade check --target-version 6.15.z
 ----
 ...
 ...
-Check if system requirements match current tuning profile:            [FAIL]
+Check if system requirements match the current tuning profile:            [FAIL]
 
 ERROR: The installer is configured to use the large tuning profile and does not meet the requirements.
 The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16.
@@ -235,7 +235,7 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 ...
 ----
 
-. This is because incorrect `tuning` profile set in `/etc/foreman-installer/scenarios.d/satellite.yaml`.
+. This is because an incorrect `tuning` profile set in `/etc/foreman-installer/scenarios.d/satellite.yaml`.
 
 .. Set the `tuning` profile as `medium` or `default` instead of `large`.
 +
@@ -252,4 +252,4 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 satellite-maintain upgrade check --target-version 6.15.z
 ----
 +
-This should complete without any errors.
+This should be complete without any errors.
