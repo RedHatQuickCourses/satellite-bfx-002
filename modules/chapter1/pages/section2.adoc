@@ -3,9 +3,9 @@
 The provided Satellite `6.15.4` server needs a minor upgrade to `6.15.z`.
 But its failing due to some incorrect configuration.
 Fix the encountered errors and ensure a successful upgrade to `6.15.z`.
-Your job is to investigate the issue and ensure satellite server is upgraded from `6.15.4` to `6.15.z`.
+Your job is to investigate the issue and ensure that the satellite server is upgraded from `6.15.4` to `6.15.z`.
 
-Here is error the message:
+Here is error in the message:
 
 .Sample output
 ----
@@ -20,7 +20,7 @@ Error: 'satellite-maintenance-6.15-for-rhel-8-x86_64-rpms' does not match a vali
 
 == Recreate Scenario
 
-To recreate this scenario, run the `lab` script on `bastion` server.
+To recreate this scenario, run the `lab` script on the `bastion` server.
 
 [source,bash,role=execute]
 ----
