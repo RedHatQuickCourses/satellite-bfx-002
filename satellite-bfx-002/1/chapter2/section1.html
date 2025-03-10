@@ -152,7 +152,7 @@
 <h2 id="_instructions"><a class="anchor" href="#_instructions"></a>Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Run following instructions on <code>satellite</code> system with <code>root</code> as user.</p>
+<p>Run the following instructions on the <code>satellite</code> system with <code>root</code> as the user.</p>
 </div>
 <div class="listingblock">
 <div class="title">Sample output:</div>
@@ -164,7 +164,7 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Try to enable the maintenance repo using but if fails.</p>
+<p>Try to enable the maintenance repo but if fails.</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">subscription-manager repos --enable satellite-maintenance-6.15-for-rhel-8-x86_64-rpms</code></pre>
@@ -226,7 +226,7 @@ To fix it:</p>
 </div>
 </li>
 <li>
-<p>Also make sure <code>manage_repos</code> is set to <code>1</code> instead of <code>0</code> in <code>/etc/rhsm/rhsm.conf</code>.</p>
+<p>Also, make sure <code>manage_repos</code> is set to <code>1</code> instead of <code>0</code> in <code>/etc/rhsm/rhsm.conf</code>.</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
@@ -295,7 +295,7 @@ Hammer configuration failed: Incorrect credential for admin user.
 </div>
 </li>
 <li>
-<p>To debug further run <code>hammer ping</code> command.</p>
+<p>To debug further run the <code>hammer ping</code> command.</p>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">hammer ping</code></pre>
@@ -370,11 +370,11 @@ Hammer configuration failed: Incorrect credential for admin user.
 <td class="content">
 Answer 'n' to question:<br>
  <code>Continue with step [Restart applicable services]?, [y(yes), n(no)]</code><br>
- because service restart wont fix the issue.<br>
+ Because service restart won&#8217;t fix the issue.<br>
  BUT<br>
  Answer 'y' to question:<br>
  <code>Continue with step [Delete old tasks]?, [y(yes), n(no)]</code><br>
- This will cleanup old tasks.
+ This will clean up old tasks.
 </td>
 </tr>
 </table>
@@ -393,7 +393,7 @@ Couldn't connect to the server: SSL_connect returned=1 errno=0 state=error: cert
 </li>
 <li>
 <p>This is because the fqdn <code>hostname -f</code> on satellite is incorrectly set as shortname.
-Verify the actual fqdn in the details for this lab or in <code>/etc/hosts</code> on the line where you corrected the ip in the previous step and update it via <code>hostnamectl set-hostname &lt;actual satellite-fqdn&gt;</code> command.</p>
+Verify the actual fqdn in the details for this lab or in <code>/etc/hosts</code> on the line where you corrected the IP in the previous step and update it via <code>hostnamectl set-hostname &lt;actual satellite-fqdn&gt;</code> command.</p>
 <div class="listingblock">
 <div class="title">Sample output:</div>
 <div class="content">
@@ -416,7 +416,7 @@ satellite
 <div class="content">
 <pre>...
 ...
-Check if system requirements match current tuning profile:            [FAIL]
+Check if system requirements match the current tuning profile:            [FAIL]
 
 ERROR: The installer is configured to use the large tuning profile and does not meet the requirements.
 The number of CPU cores for the system is 8 but the currently configured tuning profile requires 16.
@@ -426,7 +426,7 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 </div>
 </li>
 <li>
-<p>This is because incorrect <code>tuning</code> profile set in <code>/etc/foreman-installer/scenarios.d/satellite.yaml</code>.</p>
+<p>This is because an incorrect <code>tuning</code> profile set in <code>/etc/foreman-installer/scenarios.d/satellite.yaml</code>.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -447,7 +447,7 @@ The number of CPU cores for the system is 8 but the currently configured tuning 
 </div>
 </div>
 <div class="paragraph">
-<p>This should complete without any errors.</p>
+<p>This should be complete without any errors.</p>
 </div>
 </li>
 </ol>
