@@ -9,7 +9,7 @@
 . **Fill out** the required details in the order form.
 +
 image::form.png[align=left,width=540,height=380]
-. **Review the warning** at the bottom of the form and **check the box** labeled: +
+. **Review the warning** at the bottom of the form and **check the box** labeled:
    *“I confirm that I understand the above warnings.”*
 . **Click** the **Order** button to place your lab order.
 
